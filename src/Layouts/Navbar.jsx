@@ -1,11 +1,14 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { FaSignInAlt, FaUserPlus, FaBars, FaTimes, FaSignOutAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import AuthContext from "../Providers/AuthContext";
 
-const Navbar = ({isLoggedIn}) => {
+const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const dropdownRefs = useRef({});
   const navbarRef = useRef(null);
+  const {user:isLoggedIn, logOut} = useContext(AuthContext);
 
   // Mock user data
   const user = {
@@ -19,8 +22,7 @@ const Navbar = ({isLoggedIn}) => {
   };
 
   const handleLogout = () => {
-    console.log("User logged out");
-    // Add your logout logic here
+    logOut();
   };
 
   // Close dropdowns when clicking outside
@@ -180,12 +182,12 @@ const Navbar = ({isLoggedIn}) => {
               </div>
             ) : (
               <div className="flex items-center space-x-2">
-                <a
-                  href="#login"
+                <Link
+                  to="/auth/login"
                   className="btn btn-ghost btn-sm flex items-center"
                 >
                   <FaSignInAlt className="mr-1" /> Login
-                </a>
+                </Link>
                 <a
                   href="#register"
                   className="btn btn-primary btn-sm flex items-center"
@@ -292,12 +294,12 @@ const Navbar = ({isLoggedIn}) => {
                 </>
               ) : (
                 <div className="flex space-x-2">
-                  <a
-                    href="#login"
+                  <Link
+                    to="/auth/login"
                     className="btn btn-ghost btn-sm flex items-center"
                   >
                     <FaSignInAlt className="mr-1" /> Login
-                  </a>
+                  </Link>
                   <a
                     href="#register"
                     className="btn btn-primary btn-sm flex items-center"
